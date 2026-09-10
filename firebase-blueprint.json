@@ -1,0 +1,164 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User account for admin or teacher at SDN Kraton 2",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "nama": { "type": "string" },
+        "nip": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "guru"] },
+        "tanggungJawab": { 
+          "type": "string", 
+          "enum": ["Kelas 1", "Kelas 2", "Kelas 3", "Kelas 4", "Kelas 5", "Kelas 6", "Pendidikan Agama Islam", "PJOK", "Admin Sistem"] 
+        },
+        "signatureUrl": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "username", "nama", "role", "tanggungJawab"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "Global school settings and official sign-off configurations",
+      "type": "object",
+      "properties": {
+        "schoolName": { "type": "string" },
+        "schoolLogoUrl": { "type": "string" },
+        "cityLogoUrl": { "type": "string" },
+        "signatureCity": { "type": "string" },
+        "kepalaSekolahNama": { "type": "string" },
+        "kepalaSekolahNip": { "type": "string" },
+        "kepalaSekolahSignatureUrl": { "type": "string" },
+        "academicYear": { "type": "string" },
+        "activeSemester": { "type": "string" }
+      },
+      "required": ["schoolName", "signatureCity", "kepalaSekolahNama"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Student data in SDN Kraton 2",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nama": { "type": "string" },
+        "nis": { "type": "string" },
+        "nisn": { "type": "string" },
+        "kelas": { "type": "string", "enum": ["Kelas 1", "Kelas 2", "Kelas 3", "Kelas 4", "Kelas 5", "Kelas 6"] },
+        "jenisKelamin": { "type": "string", "enum": ["L", "P"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "nama", "kelas", "jenisKelamin"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily attendance record for a student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "kelas": { "type": "string" },
+        "tanggal": { "type": "string" },
+        "status": { "type": "string", "enum": ["H", "S", "I", "A"] },
+        "semester": { "type": "string", "enum": ["1", "2"] },
+        "bulan": { "type": "string" },
+        "tahun": { "type": "string" },
+        "guruId": { "type": "string" },
+        "catatan": { "type": "string" }
+      },
+      "required": ["id", "studentId", "kelas", "tanggal", "status", "semester"]
+    },
+    "Grade": {
+      "title": "Grade",
+      "description": "Student subject chapter daily assessment grade (Penilaian Harian)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "kelas": { "type": "string" },
+        "mataPelajaran": { "type": "string" },
+        "bab": { "type": "string" },
+        "jenisPenilaian": { "type": "string" },
+        "nilai": { "type": "number" },
+        "semester": { "type": "string", "enum": ["1", "2"] },
+        "tahun": { "type": "string" },
+        "guruId": { "type": "string" }
+      },
+      "required": ["id", "studentId", "kelas", "mataPelajaran", "bab", "nilai", "semester"]
+    },
+    "Journal": {
+      "title": "Journal",
+      "description": "Teacher daily teaching journal and lesson notes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tanggal": { "type": "string" },
+        "kelas": { "type": "string" },
+        "mataPelajaran": { "type": "string" },
+        "materi": { "type": "string" },
+        "kegiatan": { "type": "string" },
+        "refleksi": { "type": "string" },
+        "guruId": { "type": "string" },
+        "guruNama": { "type": "string" },
+        "bulan": { "type": "string" },
+        "semester": { "type": "string", "enum": ["1", "2"] },
+        "tahun": { "type": "string" }
+      },
+      "required": ["id", "tanggal", "kelas", "mataPelajaran", "materi", "guruId"]
+    },
+    "Counseling": {
+      "title": "Counseling",
+      "description": "Student counseling and behavioral guidance notes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tanggal": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "kelas": { "type": "string" },
+        "permasalahan": { "type": "string" },
+        "tindakLanjut": { "type": "string" },
+        "hasil": { "type": "string" },
+        "semester": { "type": "string", "enum": ["1", "2"] },
+        "tahun": { "type": "string" },
+        "guruId": { "type": "string" },
+        "guruNama": { "type": "string" }
+      },
+      "required": ["id", "tanggal", "studentId", "kelas", "permasalahan", "tindakLanjut", "guruId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "User profiles for SDN Kraton 2 admins and teachers"
+    },
+    "/settings/config": {
+      "schema": { "$ref": "Setting" },
+      "description": "Global school configuration and signature metadata"
+    },
+    "/students/{studentId}": {
+      "schema": { "$ref": "Student" },
+      "description": "Enrolled students across classes"
+    },
+    "/attendances/{attendanceId}": {
+      "schema": { "$ref": "Attendance" },
+      "description": "Daily student attendance records"
+    },
+    "/grades/{gradeId}": {
+      "schema": { "$ref": "Grade" },
+      "description": "Student assessment grades per chapter"
+    },
+    "/journals/{journalId}": {
+      "schema": { "$ref": "Journal" },
+      "description": "Teaching journals recorded by teachers"
+    },
+    "/counselings/{counselingId}": {
+      "schema": { "$ref": "Counseling" },
+      "description": "Student counseling and behavioral guidance logs"
+    }
+  }
+}

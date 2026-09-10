@@ -1,0 +1,6 @@
+{
+  "name": "Administrasi Guru SDN Kraton 2",
+  "description": "Aplikasi administrasi daftar hadir, nilai, jurnal mengajar, bimbingan siswa, dan cetak dokumen resmi untuk SD Negeri Kraton 2.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
